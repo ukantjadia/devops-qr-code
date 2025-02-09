@@ -9,35 +9,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      docker:
-        image: docker:19.03.12
-        options: --privileged
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
+    - name: Set up Docker Buildx
+      uses: docker/setup-bulidx-action@v1
 
-    - name: Install dependencies for API
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Build and push Docker image
       run: |
-        cd api
-        python -m venv .venv
-        . .venv/bin/activate
-        pip install -r requirements.txt
-        pwd
-
-    - name: Build and push Docker image for API
-      run: |
-        cd api
-        docker build -t ukantjadia/devopsqrcodeapi -f Dockerfile .
-        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-        docker push ukantjadia/devopsqrcodeapi
-
+        docker buildx create --use
+        docker buildx build \
+          --file Dcokerfile \
+          --tag ukantjadia/devops-qr-code-api:latest \
+          --push .
+        
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
