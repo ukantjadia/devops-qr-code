@@ -2,11 +2,10 @@ FROM python:3.9
 
 WORKDIR /app_dir
 
-COPY ./api/requirements.txt /app_dir/
+COPY ./requirements.txt /app_dir/
 
+RUN pip install --no-cache-dir --upgrade -r /app_dir/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r  /app_dir/requirements.txt
+COPY . /app_dir
 
-COPY ./api  /app_dir
-
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0" , "--port" "80"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
