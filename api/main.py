@@ -5,6 +5,7 @@ import qrcode
 import os
 from io import BytesIO
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, ContentSettings
+import pyodbc
 
 # Loading Environment variable (AWS Access Key and Secret Key)
 from dotenv import load_dotenv
@@ -33,6 +34,14 @@ blob_service_client = BlobServiceClient(
     f"https://{account_name}.blob.core.windows.net",
     credential=account_key
 )
+
+# Get the connection string from environment variables
+connection_string = os.getenv("AZURE_SQL_CONNECTION_STRING")
+
+# Connect to the database
+def get_db_connection():
+    conn = pyodbc.connect(connection_string)
+    return conn
 
 class QRRequest(BaseModel):
     url: str
@@ -71,3 +80,11 @@ async def generate_qr(request: QRRequest):
         return {"qr_code_url": blob_url}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/")
+def read_root():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM your_table")
+    rows = cursor.fetchall()
+    return {"data": rows}
