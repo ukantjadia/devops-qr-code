@@ -29,10 +29,13 @@ jobs:
         python -m venv .venv
         . .venv/bin/activate
         pip install -r requirements.txt
+        pwd
 
     - name: Build and push Docker image for API
       run: |
-        docker build -t ukantjadia/devopsqrcodeapi -f ~/api/Dockerfile .
+        cd
+        cd api
+        docker build -t ukantjadia/devopsqrcodeapi -f Dockerfile .
         echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
         docker push ukantjadia/devops-qr-code-api
 
