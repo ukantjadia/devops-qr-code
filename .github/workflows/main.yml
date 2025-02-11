@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - Main
+      - main
 
 jobs:
   build:
@@ -31,7 +31,7 @@ jobs:
         context: api
         file: api/Dockerfile
         push: true
-        tags: ukantjadia/devops-qr-code-api
+        tags: ukantjadia/devops-qr-code-api:latest
 
     - name: Set up Node.js
       uses: actions/setup-node@v2
@@ -46,16 +46,16 @@ jobs:
     - name: Build and push Docker image for Front-end
       run: |
         cd front-end-nextjs
-        docker build -t ukantjadia/devops-qr-code-frontend .
+        docker build -t ukantjadia/devops-qr-code-frontend:latest .
         echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-        docker push ukantjadia/devops-qr-code-frontend
+        docker push ukantjadia/devops-qr-code-frontend:latest
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: linktoqrimage
+        app-name: basicdevopsproj
         slot-name: production
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         images: |
-          ukantjadia/devops-qr-code-api
-          ukantjadia/devops-qr-code-frontend
+          ukantjadia/devops-qr-code-api:latest
+          ukantjadia/devops-qr-code-frontend:latest
