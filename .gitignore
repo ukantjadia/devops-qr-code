@@ -9,3 +9,17 @@ __pycache__/
 *.py[cod]
 *.env
 .venv/
+
+# Ignore Terraform state files and directories
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.*
+terraform/.terraform.lock.hcl
+terraform/.terraform.tfstate.backup
+
+
+# Ignore Kubernetes config files
+k8s/*.kubeconfig
+
+# Ignore log files
+*.log
