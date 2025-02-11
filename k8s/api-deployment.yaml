@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: api
-        image: ukantjadia/devops-qr-code-api:latest
+        image: basiccontainerregTwo.azurecr.io/devops-qr-code-api:latest
         ports:
         - containerPort: 80
