@@ -4,15 +4,15 @@ on:
   push:
     branches:
       - Main
-    paths:
-      - 'api/**'
-      - 'front-end-nextjs/**'
+    # paths:
+    #   - 'api/**'
+    #   - 'front-end-nextjs/**'
   pull_request:
     branches:
       - Main
-    paths:
-      - 'api/**'
-      - 'front-end-nextjs/**'
+    # paths:
+    #   - 'api/**'
+    #   - 'front-end-nextjs/**'
 
 jobs:
   build:
