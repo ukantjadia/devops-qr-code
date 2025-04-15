@@ -1,4 +1,4 @@
-# devops-qr-code
+# devops-qr-code [FlowChart](https://app.eraser.io/workspace/FvUVWqTvzrhkXkz8aEch?origin=share)
 
 This is the sample application for the DevOps Capstone Project.
 It generates QR Codes for the provided URL, the front-end is in NextJS and the API is written in Python using FastAPI.
@@ -42,7 +42,7 @@ Look at the capstone project for more detials.
 
 ## Author
 
-[Rishab Kumar](https://github.com/rishabkumar7)
+[Ukant Jadia](https://ukantjadia.me)
 
 ## License
 
